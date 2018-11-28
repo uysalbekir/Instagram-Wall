@@ -16,34 +16,34 @@
 <body>
 
     <script type="text/javascript">
-        var token = '6024602419.362badb.dc1b32e482fb4d06b3afba268b016596',
-            userid = 'self', // userid
-            num_photos = 100; // Hoeveel afbeeldingen moeten er geladen worden
+        var token = '6024602419.362badb.dc1b32e482fb4d06b3afba268b016596', // Your access token.
+            userid = 'self',  // your useraccount, leave like this if you do not want to change endpoints.
+            num_photos = 100; // number of pictures to be loaded.
 
-        // laad afbeeldingen van instagram van eigen account. (werkt alleen op eigen account!)
-        function getData() { // Functie die objecten ophaalt
+        // Script to load images
+        function getData() {
             $.ajax({
-                url: 'https://api.instagram.com/v1/users/' + userid + '/media/recent', // URL waar de objecten worden opgehaald
+                url: 'https://api.instagram.com/v1/users/' + userid + '/media/recent',
                 dataType: 'jsonp',
-                type: 'GET', // Haal data op in JSON
+                type: 'GET',
                 data: {
-                    access_token: token, // Variabele waar de access token in staat
-                    count: num_photos // Variabele waarin staat hoeveel afbeeldingen geladen worden
+                    access_token: token,
+                    count: num_photos
                 },
-                success: function(data) { // Als de objecten succesvol zijn opgehaald voert hij onderstaande uit
-                    var allImages = ""; // De variabele waarin alle afbeeldingen worden geladen in een list
-                    for (x in data.data) { // Data is de variabele, toevallig is de andere data de naam waarin alle informatie staat
-                        allImages += '<li><img src="' + data.data[x].images.standard_resolution.url + '"></li>'; // Bepaal wat je wilt ophalen aan data. (in dit geval alleen de afbeeldingen in standaard resolutie.) en plaats dit in variabele
+                success: function(data) {
+                    var allImages = "";
+                    for (x in data.data) {
+                        allImages += '<li><img src="' + data.data[x].images.standard_resolution.url + '"></li>';
                     }
-                    $('#photos').html(allImages); // Laad de inhoud van de variabele in de id
+                    $('#photos').html(allImages);
                 },
-                error: function(data) { // Als er geen objecten opgehaald kunnen worden dan wordt onderstaande uitgevoerd
-                    console.log(data); // Stuur foutberichten naar de console
+                error: function(data) {
+                    console.log(data);
                 }
             });
         }
-        function refreshData() { // de functie die steeds wordt uitgevoerd op basis van de timer die onderaan de pagina staat zodat hij pas werkt wanneer de pagina volledig is geladen
-            getData(); // Functie die objecten ophaalt
+        function refreshData() {
+            getData();
         }
     </script>
 
@@ -56,8 +56,9 @@
     </footer>
 
     <script>
-        getData(); // Functie die objecten ophaalt
-        setInterval(refreshData, 120000); // Hier wordt bepaald om de hoeveel tijd de functie getData() wordt uitgevoerd
+        // Set a timer to refresh every "X" seconds
+        getData();
+        setInterval(refreshData, 120000);
     </script>
 
 </body>
